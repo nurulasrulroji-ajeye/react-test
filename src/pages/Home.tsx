@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { fetchAllUniv } from '../fetures/universities/action';
 import Modal from '../components/Modal';
+import { onLogout } from '../fetures/auth/slice';
 
 export const Home = () => {
   const dispatch = useAppDispatch();
+  const { username } = useAppSelector((state) => state.auth.auth);
   const { data, loading } = useAppSelector((state) => state.univ);
   const [detail, setDetail] = useState({
     no: '',
@@ -26,9 +28,24 @@ export const Home = () => {
       web: data_detail?.web_pages[0] || '',
     });
   };
+
+  const handleLogout = () => {
+    dispatch(onLogout());
+  };
   return (
     <React.Fragment>
-      <div className="w-full h-screen flex justify-center items-center">
+      <div className="p-4">
+        <button
+          className="px-8 py-3 border border-black rounded-lg font-semibol"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </div>
+      <div className="w-full h-screen flex flex-col gap-3 justify-center items-center">
+        <h1 className="text-3xl">
+          Hallo <span className="font-bold">{username}</span>
+        </h1>
         {!loading ? (
           <div className="w-full flex flex-col gap-2 md:max-w-xl">
             <table className="w-full">

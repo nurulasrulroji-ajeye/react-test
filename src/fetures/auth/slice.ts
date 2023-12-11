@@ -24,8 +24,13 @@ export const authSlice = createSlice({
             state.auth.username = action.payload.username;
             state.auth.password = action.payload.password;
             state.auth.authorization = true;
-        }
+        },
+        onLogout: (state) => {
+            state.auth.username = '';
+            state.auth.password = '';
+            state.auth.authorization = false;
+        },
     },
 })
 
-export const { onLogin } = authSlice.actions
+export const { onLogin, onLogout } = authSlice.actions
